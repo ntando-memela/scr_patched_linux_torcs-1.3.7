@@ -209,16 +209,20 @@ newrace(int index, tCarElt* car, tSituation *s)
     	UDP_TIMEOUT = getTimeout();
 
     //Set sensor range
-    if (strcmp(getVersion(),"2009")==0)
+    const char* version = getVersion();
+    if (version == NULL) version = "2013";  // sane default if raceman config has no version set
+
+    if (strcmp(version, "2009") == 0)
     {
     	__SENSORS_RANGE__ = 100;
     	printf("*****2009*****\n");
     }
-    else if (strcmp(getVersion(),"2010")==0 || strcmp(getVersion(),"2011")==0 || strcmp(getVersion(),"2012")==0 || strcmp(getVersion(),"2013")==0)
-        __SENSORS_RANGE__ = 200;
+    else if (strcmp(version, "2010") == 0 || strcmp(version, "2011") == 0 ||
+        	 strcmp(version, "2012") == 0 || strcmp(version, "2013") == 0)
+    	__SENSORS_RANGE__ = 200;
     else
     {
-    	printf("%s is not a recognized version",getVersion());
+    	printf("%s is not a recognized version", version);
     	exit(0);
     }
 
